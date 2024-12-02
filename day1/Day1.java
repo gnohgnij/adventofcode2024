@@ -4,16 +4,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Day1 {
     private List<Integer> left;
     private List<Integer> right;
+    private Map<Integer, Integer> freq;
 
     public Day1() {
         this.left = new ArrayList<>();
         this.right = new ArrayList<>();
+        this.freq = new HashMap<>();
     }
 
     public void readInput() {
@@ -49,5 +53,20 @@ public class Day1 {
         }
 
         return totalDistance;
+    }
+
+    public int calculateSimilarity() {
+        for(int i : right) {
+            freq.put(i, freq.getOrDefault(i, 0) + 1);
+        }
+
+        int similarity = 0;
+        for(int i : left) {
+            if(freq.containsKey(i)) {
+                similarity += (i * freq.get(i));
+            }
+        }
+
+        return similarity;
     }
 }
